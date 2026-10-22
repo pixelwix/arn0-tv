@@ -12,10 +12,10 @@
     fitPreview();
     window.addEventListener('resize', fitPreview);
 
-    UI.init();
-    Settings.init();
-    Screensaver.init();
-    Home.init();
+    try { UI.init(); } catch (e) { DevLog.log('UI.init FAILED: ' + DevLog.errorText(e)); }
+    try { Settings.init(); } catch (e) { DevLog.log('Settings.init FAILED: ' + DevLog.errorText(e)); }
+    try { Screensaver.init(); } catch (e) { DevLog.log('Screensaver.init FAILED: ' + DevLog.errorText(e)); }
+    try { Home.init(); } catch (e) { DevLog.log('Home.init FAILED: ' + DevLog.errorText(e)); }
 
     // Preview only: open a screen directly, e.g. http://localhost:8080/#settings
     var view = location.hash.slice(1);

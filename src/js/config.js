@@ -70,7 +70,6 @@ window.LAUNCHER_CONFIG = {
         select: { freq: 1320, ms: 55, type: 'triangle' }
     },
 
-    // Development only: where the Lab screen sends its logs (npm run devlog on your computer).
-    // null disables it; set it to http://<your-computer-ip>:8099/log while debugging.
-    devLogUrl: null
+    // Development log URL (Mac IP:port)
+    devLogUrl: 'http://10.0.2.15:8099/log'
 };

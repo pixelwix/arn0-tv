@@ -23,7 +23,7 @@
         return FONTS.find(function (f) { return f.key === key; }) || FONTS[0];
     }
 
-    function pad(n) { return String(n).padStart(2, '0'); }
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
 
     // Returns { time: '16:05', suffix: '' } or { time: '4:05', suffix: 'PM' }.
     function time(d) {
