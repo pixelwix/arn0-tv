@@ -23,10 +23,14 @@ window.LAUNCHER_CONFIG = {
         { id: 'com.samsung.tv.aria-video', label: 'Apple TV' }
     ],
 
+    // Set to false to hide the apps row on Home for a clean inputs-only dashboard
+    showApps: false,
+
     inputs: [
-        { hdmi: 1, label: 'Nintendo Switch 2', brand: 'switch' },
-        { hdmi: 2, label: 'PlayStation 5', brand: 'playstation' },
-        { hdmi: 4, label: 'Xbox Series X', brand: 'xbox' }
+        { hdmi: 1, label: 'Xbox One', brand: 'xbox' },
+        { hdmi: 2, label: 'Apple TV', brand: 'appletv' },
+        { hdmi: 3, label: 'Nintendo Switch', brand: 'switch' },
+        { url: 'https://tailgate.skyn3t.me/', label: 'Tailgate', brand: 'tailgate', portLabel: 'Sports Hub' }
     ],
 
     // How an input tile switches the TV. See README "HDMI inputs".
@@ -35,12 +39,12 @@ window.LAUNCHER_CONFIG = {
     //   'inapp'          show the input full screen inside the launcher (Back returns)
     inputMethod: 'switch+viewer',
 
-    locale: 'en-GB',
+    locale: 'en-US',
 
     theme: {
         // Starting wallpaper (key from js/wallpapers.js), or null for none (plain gradient).
         // Changed from Settings → Background; the TV remembers the choice.
-        wallpaper: null
+        wallpaper: 'milky-way'
     },
 
     /*

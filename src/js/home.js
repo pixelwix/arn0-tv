@@ -117,12 +117,14 @@
         var port = el('div', 'port');
         var dot = el('span', 'dot');
         port.appendChild(dot);
-        port.appendChild(document.createTextNode('HDMI ' + input.hdmi));
+        var sub = input.portLabel || (input.hdmi ? 'HDMI ' + input.hdmi : 'Sports Hub');
+        port.appendChild(document.createTextNode(sub));
         meta.appendChild(port);
         tile.appendChild(meta);
         wrap.appendChild(tile);
-        wrap._item = { kind: 'input', hdmi: input.hdmi, label: input.label, method: input.method };
+        wrap._item = { kind: input.url ? 'url' : 'input', hdmi: input.hdmi, url: input.url, label: input.label, method: input.method };
         wrap._dot = dot;
+        if (input.url) dot.classList.add('on');
         return wrap;
     }
 
@@ -165,17 +167,24 @@
     }
 
     function renderHome() {
-        var row = $('apps-row');
-        row.innerHTML = '';
-        var items = homeItems();
-        if (!items.length) items = Apps.allSorted(state.apps, false).slice(0, 8);
-        items.forEach(function (item) { row.appendChild(appTile(item)); });
-        row.appendChild(allAppsTile());
+        var showApps = cfg.showApps !== false && !cfg.hideApps;
+        $('apps-section').classList.toggle('hidden', !showApps);
+
+        if (showApps) {
+            var row = $('apps-row');
+            row.innerHTML = '';
+            var items = homeItems();
+            if (!items.length) items = Apps.allSorted(state.apps, false).slice(0, 8);
+            items.forEach(function (item) { row.appendChild(appTile(item)); });
+            row.appendChild(allAppsTile());
+        }
 
         var row2 = $('inputs-row');
         row2.innerHTML = '';
-        inputs().forEach(function (input) {
-            if (!input.hidden) row2.appendChild(inputTile(input));
+        var activeInputs = inputs().filter(function (input) { return !input.hidden; });
+        row2.classList.toggle('inputs-4', activeInputs.length >= 4);
+        activeInputs.forEach(function (input) {
+            row2.appendChild(inputTile(input));
         });
         $('inputs-section').classList.toggle('hidden', !row2.children.length);
         applyInputStatus();
@@ -184,7 +193,11 @@
 
     function applyInputStatus() {
         UI.children($('inputs-row')).forEach(function (tile) {
-            tile._dot.classList.toggle('on', state.hdmi[tile._item.hdmi] === true);
+            if (tile._item && tile._item.kind === 'url') {
+                tile._dot.classList.add('on');
+            } else if (tile._item && tile._item.hdmi) {
+                tile._dot.classList.toggle('on', state.hdmi[tile._item.hdmi] === true);
+            }
         });
     }
 
@@ -262,6 +275,40 @@
         }).catch(function (err) {
             UI.toast('Could not switch to ' + item.label + ': ' + DevLog.errorText(err));
         });
+    }
+
+    function openUrl(item) {
+        UI.toast('Opening ' + item.label + '…');
+        log('Open URL: ' + item.url);
+        try {
+            if (typeof tizen !== 'undefined' && tizen.application && tizen.ApplicationControl) {
+                var appControl = new tizen.ApplicationControl(
+                    'http://tizen.org/appcontrol/operation/view',
+                    item.url,
+                    null,
+                    null,
+                    null
+                );
+                // Launch Samsung Internet directly, with fallback to default handler
+                tizen.application.launchAppControl(appControl, 'org.tizen.browser',
+                    function () { log('Samsung browser opened: ' + item.url); },
+                    function (err) {
+                        log('launchAppControl (org.tizen.browser) failed, trying default viewer: ' + DevLog.errorText(err));
+                        tizen.application.launchAppControl(appControl, null,
+                            function () { log('Default viewer opened: ' + item.url); },
+                            function (err2) {
+                                log('launchAppControl default failed: ' + DevLog.errorText(err2));
+                                window.open(item.url, '_blank');
+                            }
+                        );
+                    }
+                );
+                return;
+            }
+        } catch (e) {
+            log('Tizen browser launch error: ' + DevLog.errorText(e));
+        }
+        window.open(item.url, '_blank');
     }
 
     function enterTvMode() {
@@ -406,14 +453,25 @@
         UI.register('home', {
             el: $('home'),
             startRow: 1,
+            startCol: 1,
             hints: [['OK', 'Open'], ['▲', 'Settings']],
             rows: function () {
-                return [[$('gear')], UI.children($('apps-row')), UI.children($('inputs-row'))];
+                var r = [[$('gear')]];
+                if (!$('apps-section').classList.contains('hidden')) {
+                    var apps = UI.children($('apps-row'));
+                    if (apps.length) r.push(apps);
+                }
+                if (!$('inputs-section').classList.contains('hidden')) {
+                    var inps = UI.children($('inputs-row'));
+                    if (inps.length) r.push(inps);
+                }
+                return r;
             },
             activate: function (item) {
                 if (item.kind === 'app') launchApp(item);
                 else if (item.kind === 'all') UI.show('all');
                 else if (item.kind === 'input') openInput(item);
+                else if (item.kind === 'url') openUrl(item);
                 else if (item.kind === 'settings') UI.show('settings');
             },
             // Home is the root: Back does nothing.

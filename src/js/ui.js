@@ -50,7 +50,7 @@
 
     function register(name, def) {
         views[name] = def;
-        focus[name] = { r: def.startRow || 0, c: 0, last: {} };
+        focus[name] = { r: def.startRow || 0, c: def.startCol || 0, last: {} };
     }
 
     /*

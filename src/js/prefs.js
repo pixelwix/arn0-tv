@@ -29,9 +29,9 @@
                 dark: '1h'              // see Screensaver.DARK_AFTER
             },
             appearance: {
-                clock: '24h',           // '24h' | '12h'
+                clock: '12h',           // '24h' | '12h'
                 showDate: true,
-                locale: cfg.locale || 'en-GB',
+                locale: cfg.locale || 'en-US',
                 font: 'manrope',        // see Appearance.FONTS
                 names: 'always'         // app names under tiles: 'always' | 'focused' | 'never'
             },

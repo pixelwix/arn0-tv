@@ -146,6 +146,12 @@ h1, h2 {
 
 #apps-section { top: 350px; }
 #inputs-section { top: 690px; }
+#apps-section.hidden ~ #inputs-section { top: 780px; }
+#apps-section.hidden ~ #inputs-section h2 {
+    margin-bottom: 12px;
+    font-size: 18px;
+    letter-spacing: 0.16em;
+}
 
 .shelf h2 {
     margin-bottom: 26px;
@@ -274,6 +280,40 @@ h1, h2 {
     flex: none;
     width: 536px;
     margin-right: 36px;
+}
+
+/* 50% smaller input tiles: sleek dock that maximizes visible wallpaper */
+.inputs-4 .input {
+    width: 268px;
+    margin-right: 20px;
+}
+
+.inputs-4 .input .tile {
+    height: 95px;
+    padding: 0 18px;
+    border-radius: 14px;
+}
+
+.inputs-4 .input .mark {
+    width: 40px;
+    height: 40px;
+    margin-right: 14px;
+}
+
+.inputs-4 .input .name {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.inputs-4 .input .port {
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.inputs-4 .input .dot {
+    width: 9px;
+    height: 9px;
+    margin-right: 6px;
 }
 
 .input .tile {

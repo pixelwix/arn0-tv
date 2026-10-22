@@ -17,9 +17,11 @@
     var SAMSUNG_HOME = 'com.samsung.tv.csfs';
 
     var LOGOS = [
-        { key: 'playstation', label: 'PlayStation' },
+        { key: 'appletv', label: 'Apple TV' },
         { key: 'xbox', label: 'Xbox' },
         { key: 'switch', label: 'Nintendo Switch' },
+        { key: 'tailgate', label: 'Tailgate' },
+        { key: 'playstation', label: 'PlayStation' },
         { key: '', label: 'None' }
     ];
 
