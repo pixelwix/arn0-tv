@@ -28,6 +28,9 @@ signature*.xml
 .env
 .env.*
 
+# local settings (private addresses for this install); see README "Local settings"
+src/js/config.local.js
+
 # native helper build output (device-specific; build it yourself)
 native/**/bin/
 native/**/obj/

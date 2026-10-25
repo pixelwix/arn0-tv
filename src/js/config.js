@@ -30,7 +30,8 @@ window.LAUNCHER_CONFIG = {
         { hdmi: 1, label: 'Xbox One', brand: 'xbox' },
         { hdmi: 2, label: 'Apple TV', brand: 'appletv' },
         { hdmi: 3, label: 'Nintendo Switch', brand: 'switch' },
-        { url: 'https://tailgate.skyn3t.me/', label: 'Tailgate', brand: 'tailgate', portLabel: 'Sports Hub' }
+        // Set the real address in js/config.local.js (not committed); see README "Local settings".
+        { url: 'https://tailgate.example.com/', label: 'Tailgate', brand: 'tailgate', portLabel: 'Sports Hub' }
     ],
 
     // How an input tile switches the TV. See README "HDMI inputs".

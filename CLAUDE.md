@@ -1,4 +1,4 @@
-# Project Guidelines for Claude
+# Project Guidelines & Architecture
 
 # Universal Engineering Standards & Rules
 

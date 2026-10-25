@@ -47,6 +47,14 @@ the TV's copy wins (`config.js` only supplies the defaults).
 Beyond config: tile colours and brand marks in [`src/js/brands.js`](src/js/brands.js), the whole
 look in [`src/css/style.css`](src/css/style.css), and your own photos as wallpapers.
 
+### Local settings
+
+Addresses that belong to your own network or domain go in `src/js/config.local.js`, which git
+ignores. It loads right after `config.js` and can change anything in `LAUNCHER_CONFIG`. Copy
+[`src/js/config.local.example.js`](src/js/config.local.example.js) to start; it sets the Tailgate
+tile's address. `npm run build` packs it with the rest of `src/`. Without it the launcher uses the
+placeholders in `config.js`.
+
 ## Coding agent prompt
 
 This project was largely built with coding agents, and adapting it is a reasonable thing to hand to
